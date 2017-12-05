@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan'); 
 const cors = require('cors'); 
 const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
+const { router: usersRouter } = require('./users'); 
+
 
 const app = express(); 
 mongoose.Promise = global.Promise; 
@@ -23,6 +25,8 @@ app.use(
 app.get('/test', (req, res) => {
     return res.json({message: "hey there"}); 
 })
+
+app.get()
 
 let server; 
 function runServer() {
