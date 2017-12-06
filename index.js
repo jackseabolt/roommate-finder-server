@@ -30,7 +30,7 @@ app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter); 
 
 app.get('/test', (req, res) => {
-    return res.json({message: "hey there"}); 
+    return res.json({message: "IT CHANGED"}); 
 })
 
 let server; 
