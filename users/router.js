@@ -113,5 +113,4 @@ router.get('/', (req, res) => {
         .then(users => res.json(users.map(user => user.apiRepr())));
 });
 
-
 module.exports = { router }; 

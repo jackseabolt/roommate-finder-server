@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors'); 
 const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
 const { router: usersRouter } = require('./users'); 
+const { router: authRouter } = require('./auth'); 
 
 
 const app = express(); 
@@ -22,11 +23,12 @@ app.use(
     })
 );
 
+app.use('/api/users/', usersRouter);
+app.use('/api/auth/', authRouter); 
+
 app.get('/test', (req, res) => {
     return res.json({message: "hey there"}); 
 })
-
-app.get()
 
 let server; 
 function runServer() {
