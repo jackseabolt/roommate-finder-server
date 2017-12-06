@@ -6,8 +6,6 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const { User } = require('../users/models');
 const { JWT_SECRET } = require('../config');
 
-console.log("HERE IS THE JWT", JWT_SECRET)
-
 const localStrategy = new LocalStrategy((username, password, callback) => {
     let user;
     User.findOne({ username: username })
@@ -51,4 +49,5 @@ const jwtStrategy = new JwtStrategy(
 );
 
 module.exports = { localStrategy, jwtStrategy };
+
 
