@@ -90,11 +90,9 @@ router.post('/', jsonParser, (req, res) => {
             return User.hashPassword(password)
         })
         .then(data => {
-            console.log(data);
             return User.create({ firstName, lastName, username, password: data });
         })
         .then(user => {
-            console.log('user:', user);
             return res.status(201).json(user.apiRepr());
         })
         .catch(err => {
