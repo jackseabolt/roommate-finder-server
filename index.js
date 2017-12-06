@@ -3,13 +3,16 @@ const express = require('express');
 const mongoose = require('mongoose'); 
 const morgan = require('morgan'); 
 const cors = require('cors'); 
+const passport = require('passport'); 
 const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
 const { router: usersRouter } = require('./users'); 
-const { router: authRouter } = require('./auth'); 
-
+const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 const app = express(); 
 mongoose.Promise = global.Promise; 
+
+passport.use(localStrategy); 
+passport.use(jwtStrategy); 
 
 app.use(
     morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
