@@ -126,6 +126,8 @@ router.put('/', jsonParser, (req, res) => {
 
     User.findOne({ username: req.body.username })
         .then(user => {
+            let updateStatus = user.firstName ? 'updated' : 'created'; 
+
             user.firstName = req.body.firstName ? req.body.firstName : null; 
             user.lastName = req.body.firstName ? req.body.firstName : null; 
             user.city = req.body.city ? req.body.city : null; 
@@ -152,7 +154,6 @@ router.put('/', jsonParser, (req, res) => {
             user.gender_bothered = req.body.gender_bothered ? req.body.gender_bothered : null; 
             user.save(); 
 
-            let updateStatus = user.firstName ? 'updated' : 'created'; 
             return res.json({ message: `Your profile was ${updateStatus}`, user: user.apiRepr() }).status(204)
         })
 }); 
