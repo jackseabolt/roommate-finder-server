@@ -126,6 +126,9 @@ router.put('/', jsonParser, (req, res) => {
 
     User.findOne({ username: req.body.username })
         .then(user => {
+            if(!user) {
+                return res.sendStatus(422)
+            }
             let updateStatus = user.firstName ? 'updated' : 'created'; 
 
             user.firstName = req.body.firstName ? req.body.firstName : null; 

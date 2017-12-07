@@ -32,7 +32,14 @@ const UserSchema = mongoose.Schema({
   cleanliness: { type: Number },
   cleanliness_bothered: { type: Number },
   gender: { type: String },
-  gender_bothered: { type: Boolean }
+  gender_bothered: { type: Boolean }, 
+  age: { type: Number },
+  bio: { type: String }, 
+  interests: { type: String }, 
+  music: { type: String }, 
+  movies: { type: String }, 
+  tv: { type: String }
+
 });
 
 UserSchema.methods.apiRepr = function(){
@@ -40,7 +47,15 @@ UserSchema.methods.apiRepr = function(){
     id: this._id,
     firstName: this.firstName,
     lastName: this.lastName,
-    username: this.username
+    username: this.username, 
+    city: this.city, 
+    state: this.state, 
+    age: this.age,
+    bio: this.bio, 
+    interests: this.interests, 
+    music: this.music, 
+    movies: this.movies, 
+    tv: this.tv
   };
 };
 
