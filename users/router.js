@@ -155,11 +155,6 @@ router.put('/', jsonParser, (req, res) => {
             let updateStatus = user.firstName ? 'updated' : 'created'; 
             return res.json({ message: `Your profile was ${updateStatus}`, user: user.apiRepr() }).status(204)
         })
-        .catch(err => {
-            if(err){
-                return res.sendStatus(err.code)
-            }
-        })
 }); 
 
 // ROUTE TO GET SINGLE USER
