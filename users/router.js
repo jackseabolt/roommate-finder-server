@@ -112,7 +112,7 @@ router.get('/', (req, res) => {
 
 // ROUTE TO CREATE AND UPDATE USER PROFILE
 router.put('/', jsonParser, (req, res) => {
-    const requiredFields = ['firstName', 'lastName', 'username'];
+    const requiredFields = ['username'];
     const missingField = requiredFields.find(field => !(field in req.body));
 
     if (missingField) {
