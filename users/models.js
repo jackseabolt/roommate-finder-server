@@ -33,7 +33,6 @@ const UserSchema = mongoose.Schema({
   cleanliness_bothered: { type: Number },
   gender: { type: String },
   gender_bothered: { type: Boolean }, 
-  age: { type: Number },
   bio: { type: String }, 
   interests: { type: String }, 
   music: { type: String }, 

@@ -129,6 +129,7 @@ router.put('/', jsonParser, (req, res) => {
             if(!user) {
                 return res.sendStatus(422)
             }
+            console.log("IT GOT HERE")
             let updateStatus = user.firstName ? 'updated' : 'created'; 
 
             user.firstName = req.body.firstName ? req.body.firstName : null; 
