@@ -109,6 +109,22 @@ router.get('/', (req, res) => {
         .then(users => res.json(users.map(user => user.apiRepr())));
 });
 
+// ROUTE TO FILTER USERS
+router.put('/', (req, res) => {
+    User.find({city: req.body.city})
+        .where('state').equals(req.body.state)
+        .where('max_price').lte(`${req.body.max_price}`)
+        // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
+        .then(users => {
+            let newCollection = users.map(user => user.apiRepr());
+            for (let i = 0; i < newCollection.length; i++ ) {
+                newCollection[i].score = '5';
+
+            }
+            newCollection.sort();
+            return res.json(newCollection);
+        });
+});
 
 // ROUTE TO CREATE AND UPDATE USER PROFILE
 router.put('/', jsonParser, (req, res) => {
