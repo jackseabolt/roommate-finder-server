@@ -37,8 +37,8 @@ const UserSchema = mongoose.Schema({
   interests: { type: String }, 
   music: { type: String }, 
   movies: { type: String }, 
-  tv: { type: String }
-
+  tv: { type: String },
+  looking_for: { type: String } 
 });
 
 UserSchema.methods.apiRepr = function(){
@@ -54,7 +54,8 @@ UserSchema.methods.apiRepr = function(){
     interests: this.interests, 
     music: this.music, 
     movies: this.movies, 
-    tv: this.tv
+    tv: this.tv, 
+    looking_for: this.looking_for
   };
 };
 
