@@ -110,20 +110,23 @@ router.get('/', (req, res) => {
 });
 
 // ROUTE TO FILTER USERS
-router.put('/filter', (req, res) => {
+router.put('/filter', jsonParser, (req, res) => {
+    if (req.body.looking_for === 'find_a_room'){
     User.find({city: req.body.city})
         .where('state').equals(req.body.state)
         .where('max_price').lte(`${req.body.max_price}`)
+        .where('looking_for').equals('fill_a_room')
         // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
         .then(users => {
             let newCollection = users.map(user => user.apiRepr());
             for (let i = 0; i < newCollection.length; i++ ) {
-                newCollection[i].score = '5';
-
+                console.log(newCollection);
+                // newCollection[i].score = 'A + B + C + D + E + F + G + H + I';
             }
-            newCollection.sort();
+            // newCollection.sort();
             return res.json(newCollection);
         });
+    }
 });
 
 // ROUTE TO CREATE AND UPDATE USER PROFILE
