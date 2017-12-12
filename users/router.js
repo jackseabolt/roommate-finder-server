@@ -5,12 +5,7 @@ const bodyParser = require('body-parser');
 const { User } = require('./models'); 
 const router = express.Router(); 
 const jsonParser = bodyParser.json(); 
-const AWS = require('aws-sdk');
 
-AWS.config.loadFromPath('../config.json');
-let s3 = new AWS.S3()
-let bucketParams = {Bucket: 'myBucket'};
-s3.createBucket(bucketParams)
 
 
 // ROUTE TO CREATE USERS INITIALLY
