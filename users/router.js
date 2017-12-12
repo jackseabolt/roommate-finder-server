@@ -111,7 +111,7 @@ router.get('/', (req, res) => {
 });
 
 // ROUTE TO FILTER USERS
-router.put('/', (req, res) => {
+router.put('/filter', (req, res) => {
     User.find({city: req.body.city})
         .where('state').equals(req.body.state)
         .where('max_price').lte(`${req.body.max_price}`)
