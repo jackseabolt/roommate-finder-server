@@ -4,6 +4,20 @@ const mongoose = require('mongoose');
 const morgan = require('morgan'); 
 const cors = require('cors'); 
 const passport = require('passport'); 
+
+const cloudinary = require('cloudinary');
+
+cloudinary.config({ 
+    cloud_name: 'dkksqcvlg', 
+    api_key: '672261415716922', 
+    api_secret: 'xkKjbIvchS4i4dgN57QhG9n8Ky8' 
+});
+
+  
+  
+
+
+
 const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
 const { router: usersRouter } = require('./users'); 
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
@@ -26,8 +40,10 @@ app.use(
     })
 );
 
+
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter); 
+
 
 app.get('/test', (req, res) => {
     return res.json({message: "IT CHANGED"}); 

@@ -7,6 +7,7 @@ const router = express.Router();
 const jsonParser = bodyParser.json(); 
 
 
+
 // ROUTE TO CREATE USERS INITIALLY
 router.post('/', jsonParser, (req, res) => {
     const requiredFields = ['username', 'password', 'looking_for'];
