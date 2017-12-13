@@ -180,40 +180,46 @@ router.put('/', jsonParser, (req, res) => {
             location: missingField
         });
     }
-
+    console.log('it is rejected', req.body.username);
     User.findOne({ username: req.body.username })
         .then(user => {
             if(!user) {
+                
                 return res.sendStatus(422)
             }
             console.log("IT GOT HERE")
             let updateStatus = user.firstName ? 'updated' : 'created'; 
 
-            user.firstName = req.body.firstName ? req.body.firstName : null; 
-            user.lastName = req.body.firstName ? req.body.firstName : null; 
-            user.city = req.body.city ? req.body.city : null; 
-            user.state = req.body.state ? req.body.state : null; 
-            user.age = req.body.age ? req.body.age : null;
-            user.max_distance = req.body.max_distance ? req.body.max_distance : null; 
-            user.max_price = req.body.max_price ? req.body.max_price: null; 
-            user.pets_have = req.body.pets_have ? req.body.pets_have : null; 
-            user.pets_bothered = req.body.pets_bothered ? req.body.pets_bothered : null; 
-            user.loud_music = req.body.loud_music ? req.body.loud_music : null; 
-            user.loud_music_bothered = req.body.loud_music_bothered ? req.body.loud_music_bothered : null; 
-            user.cigarettes = req.body.cigarettes ? req.body.cigarettes : null; 
-            user.cigarettes_bothered = req.body.cigarettes_bothered ? req.body.cigarettes_bothered : null; 
-            user.drinking_day_per_week = req.body.drinking_day_per_week ? req.body.drinking_day_per_week : null; 
-            user.drinking_bothered = req.body.drinking_bothered ? req.body.drinking_bothered : null; 
-            user.alt_smoking = req.body.alt_smoking ? req.body.alt_smoking : null; 
-            user.alt_smoking_bothered = req.body.alt_smoking_bothered  ? req.body.alt_smoking_bothered  : null; 
-            user.hour_awake = req.body.hour_awake ? req.body.hour_awake : null;  
-            user.hours_bothered = req.body.hours_bothered ? req.body.hours_bothered : null; 
-            user.guest_frequency = req.body.guest_frequency ? req.body.guest_frequency : null; 
-            user.guests_bothered = req.body.guests_bothered ? req.body.guests_bothered : null; 
-            user.cleanliness = req.body.cleanliness ? req.body.cleanliness : null; 
-            user.cleanliness_bothered = req.body.cleanliness_bothered ? req.body.cleanliness_bothered : null; 
-            user.gender = req.body.gender ? req.body.gender : null; 
-            user.gender_bothered = req.body.gender_bothered ? req.body.gender_bothered : null; 
+            user.firstName = req.body.firstName ? req.body.firstName : user.firstName; 
+            user.lastName = req.body.firstName ? req.body.firstName : user.lastName; 
+            user.city = req.body.city ? req.body.city : user.city; 
+            user.state = req.body.state ? req.body.state : user.state; 
+            user.age = req.body.age ? req.body.age : user.age;
+            user.max_distance = req.body.max_distance ? req.body.max_distance : user.max_distance; 
+            user.max_price = req.body.max_price ? req.body.max_price: user.max_price; 
+            user.pets_have = req.body.pets_have ? req.body.pets_have : user.pets_have ; 
+            user.pets_bothered = req.body.pets_bothered ? req.body.pets_bothered : user.pets_bothered; 
+            user.loud_music = req.body.loud_music ? req.body.loud_music : user.loud_music; 
+            user.loud_music_bothered = req.body.loud_music_bothered ? req.body.loud_music_bothered : user.loud_music_bothered; 
+            user.cigarettes = req.body.cigarettes ? req.body.cigarettes : user.cigarettes; 
+            user.cigarettes_bothered = req.body.cigarettes_bothered ? req.body.cigarettes_bothered : user.cigarettes_bothered; 
+            user.drinking_day_per_week = req.body.drinking_day_per_week ? req.body.drinking_day_per_week : user.drinking_day_per_week; 
+            user.drinking_bothered = req.body.drinking_bothered ? req.body.drinking_bothered : user.drinking_bothered; 
+            user.alt_smoking = req.body.alt_smoking ? req.body.alt_smoking : user.alt_smoking; 
+            user.alt_smoking_bothered = req.body.alt_smoking_bothered ? req.body.alt_smoking_bothered : user.alt_smoking_bothered; 
+            user.hour_awake = req.body.hour_awake ? req.body.hour_awake : user.hour_awake;  
+            user.hours_bothered = req.body.hours_bothered ? req.body.hours_bothered : user.hours_bothered; 
+            user.guest_frequency = req.body.guest_frequency ? req.body.guest_frequency : user.guest_frequency; 
+            user.guests_bothered = req.body.guests_bothered ? req.body.guests_bothered : user.guests_bothered; 
+            user.cleanliness = req.body.cleanliness ? req.body.cleanliness : user.cleanliness; 
+            user.cleanliness_bothered = req.body.cleanliness_bothered ? req.body.cleanliness_bothered : user.cleanliness_bothered; 
+            user.gender = req.body.gender ? req.body.gender : user.gender; 
+            user.gender_bothered = req.body.gender_bothered ? req.body.gender_bothered : user.gender_bothered; 
+            user.bio = req.body.bio ? req.body.bio : user.bio;
+            user.interests = req.body.interests ? req.body.interests : user.interests;
+            user.music = req.body.music ? req.body.music : user.music;
+            user.movies = req.body.movies ? req.body.movies : user.movies;
+            user.tv = req.body.tv ? req.body.tv : user.tv;
             user.save(); 
 
             return res.json({ message: `Your profile was ${updateStatus}`, user: user.apiRepr() }).status(204)

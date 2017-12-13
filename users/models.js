@@ -65,7 +65,7 @@ UserSchema.methods.apiRepr = function(){
     drinking_day_per_week: this.drinking_day_per_week,
     drinking_bothered: this.drinking_bothered,
     alt_smoking: this.alt_smoking,
-    alt_smoking_bothered: alt_smoking_bothered,
+    alt_smoking_bothered: this.alt_smoking_bothered,
     hour_awake: this.hours_awake,
     hours_bothered: this.hours_bothered,
     guests_frequency: this.guests_frequency,
