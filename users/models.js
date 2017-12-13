@@ -40,7 +40,8 @@ const UserSchema = mongoose.Schema({
   music: { type: String }, 
   movies: { type: String }, 
   tv: { type: String },
-  looking_for: { type: String } 
+  looking_for: { type: String },
+  score: {type: Number}
 });
 
 UserSchema.methods.apiRepr = function(){
