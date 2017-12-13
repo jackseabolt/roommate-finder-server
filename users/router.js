@@ -143,10 +143,11 @@ router.put('/', jsonParser, (req, res) => {
             location: missingField
         });
     }
-
+    console.log('it is rejected', req.body.username);
     User.findOne({ username: req.body.username })
         .then(user => {
             if(!user) {
+                
                 return res.sendStatus(422)
             }
             console.log("IT GOT HERE")
@@ -166,9 +167,9 @@ router.put('/', jsonParser, (req, res) => {
             user.cigarettes = req.body.cigarettes ? req.body.cigarettes : user.cigarettes; 
             user.cigarettes_bothered = req.body.cigarettes_bothered ? req.body.cigarettes_bothered : user.cigarettes_bothered; 
             user.drinking_day_per_week = req.body.drinking_day_per_week ? req.body.drinking_day_per_week : user.drinking_day_per_week; 
-            user.drinking_bothered = req.body.drinking_bothered ? req.body.drinking_bothered : drinking_day_per_week; 
+            user.drinking_bothered = req.body.drinking_bothered ? req.body.drinking_bothered : user.drinking_bothered; 
             user.alt_smoking = req.body.alt_smoking ? req.body.alt_smoking : user.alt_smoking; 
-            user.alt_smoking_bothered = req.body.alt_smoking_bothered  ? req.body.alt_smoking_bothered : user.alt_smoking_bothered; 
+            user.alt_smoking_bothered = req.body.alt_smoking_bothered ? req.body.alt_smoking_bothered : user.alt_smoking_bothered; 
             user.hour_awake = req.body.hour_awake ? req.body.hour_awake : user.hour_awake;  
             user.hours_bothered = req.body.hours_bothered ? req.body.hours_bothered : user.hours_bothered; 
             user.guest_frequency = req.body.guest_frequency ? req.body.guest_frequency : user.guest_frequency; 
@@ -177,6 +178,11 @@ router.put('/', jsonParser, (req, res) => {
             user.cleanliness_bothered = req.body.cleanliness_bothered ? req.body.cleanliness_bothered : user.cleanliness_bothered; 
             user.gender = req.body.gender ? req.body.gender : user.gender; 
             user.gender_bothered = req.body.gender_bothered ? req.body.gender_bothered : user.gender_bothered; 
+            user.bio = req.body.bio ? req.body.bio : user.bio;
+            user.interests = req.body.interests ? req.body.interests : user.interests;
+            user.music = req.body.music ? req.body.music : user.music;
+            user.movies = req.body.movies ? req.body.movies : user.movies;
+            user.tv = req.body.tv ? req.body.tv : user.tv;
             user.save(); 
 
             return res.json({ message: `Your profile was ${updateStatus}`, user: user.apiRepr() }).status(204)
