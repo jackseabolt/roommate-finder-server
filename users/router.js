@@ -244,7 +244,7 @@ router.put('/', jsonParser, (req, res) => {
             let updateStatus = user.firstName ? 'updated' : 'created'; 
 
             user.firstName = req.body.firstName ? req.body.firstName : user.firstName; 
-            user.lastName = req.body.firstName ? req.body.firstName : user.lastName; 
+            user.lastName = req.body.lastName ? req.body.lastName : user.lastName; 
             user.city = req.body.city ? req.body.city : user.city; 
             user.state = req.body.state ? req.body.state : user.state; 
             user.age = req.body.age ? req.body.age : user.age;
