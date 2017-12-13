@@ -168,7 +168,9 @@ router.put('/filter', jsonParser, (req, res) => {
                 console.log(newCollection[i]);
                 
             }
-            newCollection.sort();
+            newCollection.sort(function(a, b){
+                return a.score-b.score;
+            });
             return res.json(newCollection);
         });
     }
