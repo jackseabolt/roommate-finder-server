@@ -114,18 +114,59 @@ router.get('/', (req, res) => {
 router.put('/filter', jsonParser, (req, res) => {
 
 
-
     if (req.body.looking_for === 'fill_a_room'){
     User.find({city: req.body.city})
         .where('state').equals(req.body.state)
-        .where('max_price').gte(`${req.body.max_price}`)
+        .where('max_price').lte(`${req.body.max_price}`)
         .where('looking_for').equals('find_a_room')
         // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
         .then(users => {
             let newCollection = users.map(user => user.apiRepr());
             for (let i = 0; i < newCollection.length; i++ ) {
-                console.log(newCollection);
-                newCollection[i].score = 'A + B + C + D + E + F + G + H + I';
+                let petScore = 100;
+                let quietScore = 100;
+                let cigaretteScore = 100;
+                let alcoholScore = 100; 
+                let marijuanaScore = 100;
+                let scheduleScore = 100;
+                let guestScore = 100;
+                let cleanScore = 100;
+                let aloneScore = 100;
+                let genderScore = 100; 
+               if (newCollection[i].pets_have === true) {
+                petScore = (100 - (req.body.pets_bothered * 20));
+               }
+               if (newCollection[i].loud_music === true) {
+                quietScore = (100 - (req.body.loud_music_bothered * 20));
+               }
+               if (newCollection[i].cigarettes === true) {
+                cigaretteScore = (100 - (req.body.cigarettes_bothered * 20));                
+               }
+               if (newCollection[i].drinking_day_per_week === true) {
+                alcoholScore = (100 - (req.body.drinking_bothered * 20));               
+               }
+               if (newCollection[i].alt_smoking === true) {
+                marijuanaScore = (100 - (req.body.alt_smoking_bothered * 20));               
+               }
+               if (newCollection[i].hour_awake === true) {
+                scheduleScore = (100 - (req.body.hours_bothered * 20));               
+               }
+               if (newCollection[i].guests_frequency === true) {
+                guestScore = (100 - (req.body.guests_bothered * 20));               
+               }  
+               if (newCollection[i].cleanliness === true) {
+                cleanScore = (100 - (req.body.cleanliness_bothered * 20));               
+               }  
+               if (newCollection[i].common_areas === true) {
+                aloneScore = (100 - (req.body.common_areas_bothered * 20));               
+               } 
+               if (newCollection[i].gender === true) {
+                genderScore = (100 - (req.body.gender_bothered * 20));                
+               }   
+                newCollection[i].score = (petScore + quietScore + cigaretteScore + alcoholScore + marijuanaScore + scheduleScore + guestScore + cleanScore + aloneScore + genderScore) / 10;
+                console.log(newCollection[i].score);
+                console.log(newCollection[i]);
+                
             }
             newCollection.sort();
             return res.json(newCollection);
@@ -135,14 +176,19 @@ router.put('/filter', jsonParser, (req, res) => {
     else if (req.body.looking_for === 'find_a_room'){
         User.find({city: req.body.city})
             .where('state').equals(req.body.state)
-            .where('max_price').lte(`${req.body.max_price}`)
+            .where('max_price').gte(`${req.body.max_price}`)
             .where('looking_for').equals('fill_a_room')
             // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
             .then(users => {
                 let newCollection = users.map(user => user.apiRepr());
                 for (let i = 0; i < newCollection.length; i++ ) {
                     console.log(newCollection);
-                    // newCollection[i].score = 'A + B + C + D + E + F + G + H + I';
+                   if (newCollection[i].pets_have === false) {
+                    let petScore = req.body.pets_bothered * 2;
+                    console.log(petScore);
+                    newCollection[i].score = petScore;
+                    console.log(newCollection[i].score);
+                    }
                 }
                 // newCollection.sort();
                 return res.json(newCollection);
@@ -158,7 +204,12 @@ router.put('/filter', jsonParser, (req, res) => {
                     let newCollection = users.map(user => user.apiRepr());
                     for (let i = 0; i < newCollection.length; i++ ) {
                         console.log(newCollection);
-                        // newCollection[i].score = 'A + B + C + D + E + F + G + H + I';
+                       if (newCollection[i].pets_have === false) {
+                        let petScore = req.body.pets_bothered * 2;
+                        console.log(petScore);
+                        newCollection[i].score = petScore;
+                        console.log(newCollection[i].score);
+                        }
                     }
                     // newCollection.sort();
                     return res.json(newCollection);
