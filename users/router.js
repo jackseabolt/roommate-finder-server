@@ -112,12 +112,13 @@ router.get('/', (req, res) => {
 
 // ROUTE TO FILTER USERS
 router.put('/filter', jsonParser, (req, res) => {
-
+    console.log('PUT IS HAPPENING');
+    console.log(req.body);
 
     if (req.body.looking_for === 'fill_a_room'){
     User.find({city: req.body.city})
         .where('state').equals(req.body.state)
-        .where('max_price').lte(`${req.body.max_price}`)
+        .where('max_price').gte(`${req.body.max_price}`)
         .where('looking_for').equals('find_a_room')
         // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
         .then(users => {
@@ -169,7 +170,7 @@ router.put('/filter', jsonParser, (req, res) => {
                 
             }
             newCollection.sort(function(a, b){
-                return a.score-b.score;
+                return b.score-a.score;
             });
             return res.json(newCollection);
         });
@@ -178,7 +179,7 @@ router.put('/filter', jsonParser, (req, res) => {
     else if (req.body.looking_for === 'find_a_room'){
         User.find({city: req.body.city})
             .where('state').equals(req.body.state)
-            .where('max_price').gte(`${req.body.max_price}`)
+            .where('max_price').lte(`${req.body.max_price}`)
             .where('looking_for').equals('fill_a_room')
             // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
             .then(users => {
