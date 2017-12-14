@@ -43,7 +43,8 @@ const UserSchema = mongoose.Schema({
   movies: { type: String }, 
   tv: { type: String },
   looking_for: { type: String },
-  score: {type: Number}
+  score: {type: Number}, 
+  picture: {type: String}
 });
 
 UserSchema.methods.apiRepr = function(){
@@ -82,7 +83,8 @@ UserSchema.methods.apiRepr = function(){
     common_areas_bothered: this.common_areas_bothered,
     movies: this.movies, 
     tv: this.tv, 
-    looking_for: this.looking_for
+    looking_for: this.looking_for, 
+    picture: this.picture
   };
 };
 

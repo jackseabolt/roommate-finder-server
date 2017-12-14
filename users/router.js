@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { User } = require('./models');
 const router = express.Router();
 const jsonParser = bodyParser.json();
+const cloudinary = require('cloudinary')
 
 
 
@@ -297,6 +298,7 @@ router.put('/filter', jsonParser, (req, res) => {
 
 // ROUTE TO CREATE AND UPDATE USER PROFILE
 router.put('/', jsonParser, (req, res) => {
+    console.log("HERE IS THE REQ", req.body)
     const requiredFields = ['username'];
     const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -308,7 +310,7 @@ router.put('/', jsonParser, (req, res) => {
             location: missingField
         });
     }
-    console.log('it is rejected', req.body.username);
+    console.log('it is not rejected', req.body.picture);
     User.findOne({ username: req.body.username })
         .then(user => {
             if (!user) {
@@ -317,6 +319,10 @@ router.put('/', jsonParser, (req, res) => {
             }
             console.log("IT GOT HERE")
             let updateStatus = user.firstName ? 'updated' : 'created';
+
+
+            cloudinary.uploader.upload(req.body.picture,
+            function(result) { console.log("CLOUDINARY", result) })
 
             user.firstName = req.body.firstName ? req.body.firstName : user.firstName;
             user.lastName = req.body.lastName ? req.body.lastName : user.lastName;
@@ -350,6 +356,7 @@ router.put('/', jsonParser, (req, res) => {
             user.music = req.body.music ? req.body.music : user.music;
             user.movies = req.body.movies ? req.body.movies : user.movies;
             user.tv = req.body.tv ? req.body.tv : user.tv;
+            user.picture = req.body.picture ? req.body.picture : user.picture; 
             user.save();
 
             return res.json({ message: `Your profile was ${updateStatus}`, user: user.apiRepr() }).status(204)

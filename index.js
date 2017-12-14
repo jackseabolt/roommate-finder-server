@@ -47,7 +47,7 @@ app.use('/api/auth/', authRouter);
 
 app.get('/test', (req, res) => {
     return res.json({message: "IT CHANGED"}); 
-})
+});
 
 let server; 
 function runServer() {
