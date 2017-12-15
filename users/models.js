@@ -43,7 +43,12 @@ const UserSchema = mongoose.Schema({
   movies: { type: String }, 
   tv: { type: String },
   looking_for: { type: String },
-  score: {type: Number}
+  score: {type: Number},
+  conversations: [
+    {
+      conversation: {type: String}
+    }
+  ]
 });
 
 UserSchema.methods.apiRepr = function(){
