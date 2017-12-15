@@ -4,13 +4,14 @@ const mongoose = require('mongoose');
 const morgan = require('morgan'); 
 const cors = require('cors'); 
 const passport = require('passport'); 
+const socket = require('socket.io');
 
 const cloudinary = require('cloudinary');
 
 cloudinary.config({ 
-    cloud_name: 'dkksqcvlg', 
-    api_key: '672261415716922', 
-    api_secret: 'xkKjbIvchS4i4dgN57QhG9n8Ky8' 
+  cloud_name: 'dkksqcvlg', 
+  api_key: '672261415716922', 
+  api_secret: 'xkKjbIvchS4i4dgN57QhG9n8Ky8' 
 });
 
   
@@ -28,16 +29,25 @@ mongoose.Promise = global.Promise;
 passport.use(localStrategy); 
 passport.use(jwtStrategy); 
 
+// app.use(function(req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type');
+//   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+//   next();
+// });
+
 app.use(
-    morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
-        skip: (req, res) => process.env.NODE_ENV === 'test'
-    })
+  morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
+    skip: (req, res) => process.env.NODE_ENV === 'test'
+  })
 ); 
 
 app.use(
-    cors({
-        origin: CLIENT_ORIGIN
-    })
+  cors({
+    origin: CLIENT_ORIGIN
+  })
+ 
 );
 
 
@@ -51,39 +61,56 @@ app.get('/test', (req, res) => {
 
 let server; 
 function runServer() {
-    return new Promise((resolve, reject) => {
-        mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
-            if(err) {
-                return reject(err)
-            }
-            server = app.listen(PORT, () => {
-                console.log(`The application is listening on port ${PORT}`)
-                resolve(); 
-            })
-            .on('error', err => {
-                mongoose.disconnect(); 
-                reject(err); 
-            }); 
+  return new Promise((resolve, reject) => {
+    mongoose.connect(DATABASE_URL, {useMongoClient: true}, err => {
+      if(err) {
+        return reject(err);
+      }
+      server = app.listen(PORT, () => {
+        connectSocket(server);
+        console.log(`The application is listening on port ${PORT}`);
+        resolve(); 
+      })
+        .on('error', err => {
+          mongoose.disconnect(); 
+          reject(err); 
         }); 
     }); 
+  }); 
+}
+function connectSocket(server){
+  let io = socket(server);
+  console.log('server', server);
+    
+  io.on('connection', (socket) => {
+    console.log(socket.id);
+    //  socket.on('create', function(room){
+   // socket.join('room1');
+    //  });
+   // io.to('room1').emit('room2');
+   // io.in('room3').emit('room4');
+    socket.on('SEND_MESSAGE', function(data){
+      io.emit('RECEIVE_MESSAGE', data);
+    });
+  });
 }
 
 function closeServer() {
-    return mongoose.disconnect().then(() => {
-        return new PromiseProvider((resolve, reject) => {
-            console.log('Closing server'); 
-            server.close(err => {
-                if(err){
-                    return reject(err); 
-                }
-                resolve(); 
-            });
-        });
+  return mongoose.disconnect().then(() => {
+    return new PromiseProvider((resolve, reject) => {
+      console.log('Closing server'); 
+      server.close(err => {
+        if(err){
+          return reject(err); 
+        }
+        resolve(); 
+      });
     });
+  });
 }
 
 if (require.main === module) {
-    runServer().catch(err => console.error(err))
+  runServer().catch(err => console.error(err));
 }
 
 module.exports = { app, runServer, closeServer }; 
