@@ -46,7 +46,8 @@ const UserSchema = mongoose.Schema({
   score: {type: Number},
   conversations: [
     {
-      conversation: {type: String}
+      conversation: {type: String},
+      other_user: {type: String}
     }
   ],
   picture: {type: String}

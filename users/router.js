@@ -296,6 +296,22 @@ router.put('/filter', jsonParser, (req, res) => {
     }
 });
 
+//route to create chat
+router.put('/chat', jsonParser, (req, res) => {
+    const newConversation1 = { conversation: req.body.currentChat, other_user: req.body.user2 };
+    const newConversation2 = { conversation: req.body.currentChat, other_user: req.body.user1 };
+    User
+        .update( { username: req.body.user1},
+        { $push: { conversations: newConversation1}} 
+        ) 
+        .then(() => {
+            return User
+            .update( { username: req.body.user2},
+            { $push: { conversations: newConversation2}} )  
+        })
+        .then(() => res.sendStatus(201))
+});
+
 // ROUTE TO CREATE AND UPDATE USER PROFILE
 router.put('/', jsonParser, (req, res) => {
     console.log("HERE IS THE REQ", req.body)
