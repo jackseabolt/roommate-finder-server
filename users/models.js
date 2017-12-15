@@ -90,7 +90,8 @@ UserSchema.methods.apiRepr = function(){
     movies: this.movies, 
     tv: this.tv, 
     looking_for: this.looking_for, 
-    picture: this.picture
+    picture: this.picture,
+    conversations: this.conversations
   };
 };
 
