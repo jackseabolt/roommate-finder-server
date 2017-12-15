@@ -48,7 +48,8 @@ const UserSchema = mongoose.Schema({
     {
       conversation: {type: String}
     }
-  ]
+  ],
+  picture: {type: String}
 });
 
 UserSchema.methods.apiRepr = function(){
@@ -77,14 +78,18 @@ UserSchema.methods.apiRepr = function(){
     hours_bothered: this.hours_bothered,
     guests_frequency: this.guests_frequency,
     guests_bothered: this.guests_bothered,
+    cleanliness: this.cleanliness,
     cleanliness_bothered: this.cleanliness_bothered,
     gender: this.gender,
     gender_bothered: this.gender_bothered, 
     interests: this.interests, 
     music: this.music, 
+    common_areas: this.common_areas,
+    common_areas_bothered: this.common_areas_bothered,
     movies: this.movies, 
     tv: this.tv, 
-    looking_for: this.looking_for
+    looking_for: this.looking_for, 
+    picture: this.picture
   };
 };
 
