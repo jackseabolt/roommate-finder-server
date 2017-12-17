@@ -116,7 +116,7 @@ router.put('/filter', jsonParser, (req, res) => {
     if (req.body.looking_for === 'fill_a_room') {
         User.find({ city: req.body.city })
             .where('state').equals(req.body.state)
-            .where('max_price').gte(`${req.body.max_price}`)
+            .where('max_price').gte(req.body.max_price)
             .where('looking_for').equals('find_a_room')
             // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
             .then(users => {
@@ -177,7 +177,7 @@ router.put('/filter', jsonParser, (req, res) => {
     else if (req.body.looking_for === 'find_a_room') {
         User.find({ city: req.body.city })
             .where('state').equals(req.body.state)
-            .where('max_price').lte(`${req.body.max_price}`)
+            .where('max_price').lte(req.body.max_price)
             .where('looking_for').equals('fill_a_room')
             // go through each of the users, calculate algorithm for each user and assign score, then sort the array 
             .then(users => {
@@ -373,6 +373,8 @@ router.put('/', jsonParser, (req, res) => {
             user.movies = req.body.movies ? req.body.movies : user.movies;
             user.tv = req.body.tv ? req.body.tv : user.tv;
             user.picture = req.body.picture ? req.body.picture : user.picture; 
+            user.lat = req.body.lat ? req.body.lat : user.lat;
+            user.long = req.body.long ? req.body.long : user.long;
             user.save();
 
             return res.json({ message: `Your profile was ${updateStatus}`, user: user.apiRepr() }).status(204)

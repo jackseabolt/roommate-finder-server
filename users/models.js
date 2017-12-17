@@ -44,6 +44,8 @@ const UserSchema = mongoose.Schema({
   tv: { type: String },
   looking_for: { type: String },
   score: {type: Number},
+  lat: {type: Number},
+  long: {type: Number},
   conversations: [
     {
       conversation: {type: String},
@@ -91,7 +93,9 @@ UserSchema.methods.apiRepr = function(){
     tv: this.tv, 
     looking_for: this.looking_for, 
     picture: this.picture,
-    conversations: this.conversations
+    conversations: this.conversations,
+    lat: this.lat,
+    long: this.long
   };
 };
 
