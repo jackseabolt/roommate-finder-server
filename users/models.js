@@ -52,7 +52,8 @@ const UserSchema = mongoose.Schema({
       other_user: {type: String}
     }
   ],
-  picture: {type: String}
+  picture: {type: String},
+  email: {type: String}
 });
 
 UserSchema.methods.apiRepr = function(){
@@ -95,7 +96,8 @@ UserSchema.methods.apiRepr = function(){
     picture: this.picture,
     conversations: this.conversations,
     lat: this.lat,
-    long: this.long
+    long: this.long,
+    email: this.email
   };
 };
 

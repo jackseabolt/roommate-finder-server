@@ -22,6 +22,7 @@ cloudinary.config({
 const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
 const { router: usersRouter } = require('./users'); 
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
+const { router: chatRouter } = require('./chat');
 
 const app = express(); 
 mongoose.Promise = global.Promise; 
@@ -53,10 +54,11 @@ app.use(
 
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter); 
+app.use('/api/chat/', chatRouter);
 
 
 app.get('/test', (req, res) => {
-    return res.json({message: "IT CHANGED"}); 
+  return res.json({message: 'IT CHANGED'}); 
 });
 
 let server; 
@@ -85,10 +87,15 @@ function connectSocket(server){
   io.on('connection', (socket) => {
     console.log(socket.id);
     //  socket.on('create', function(room){
-   // socket.join('room1');
+    // socket.join('room1');
     //  });
-   // io.to('room1').emit('room2');
-   // io.in('room3').emit('room4');
+    // io.to('room1').emit('room2');
+    // io.in('room3').emit('room4');
+    //changed
+    socket.on('room', function(room){
+      console.log('room found', room);
+      socket.join(room);
+    });
     socket.on('SEND_MESSAGE', function(data){
       io.emit('RECEIVE_MESSAGE', data);
     });
