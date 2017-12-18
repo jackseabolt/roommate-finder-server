@@ -11,7 +11,7 @@ const cloudinary = require('cloudinary')
 
 // ROUTE TO CREATE USERS INITIALLY
 router.post('/', jsonParser, (req, res) => {
-    const requiredFields = ['username', 'password', 'looking_for'];
+    const requiredFields = ['username', 'password', 'looking_for', 'email'];
     const missingField = requiredFields.find(field => !(field in req.body));
 
     if (missingField) {
@@ -23,7 +23,7 @@ router.post('/', jsonParser, (req, res) => {
         });
     }
 
-    const stringFields = ['username', 'password'];
+    const stringFields = ['username', 'password', 'email'];
     const nonStringField = stringFields.find(
         field => field in req.body && typeof req.body[field] !== 'string'
     );
@@ -37,7 +37,7 @@ router.post('/', jsonParser, (req, res) => {
         });
     }
 
-    const explicityTrimmedFields = ['username', 'password'];
+    const explicityTrimmedFields = ['username', 'password', 'email'];
     const nonTrimmedField = explicityTrimmedFields.find(
         field => req.body[field].trim() !== req.body[field]
     );
@@ -75,7 +75,7 @@ router.post('/', jsonParser, (req, res) => {
         });
     }
 
-    let { username, password, looking_for } = req.body;
+    let { username, password, looking_for, email } = req.body;
     return User.find({ username })
         .count()
         .then(count => {
@@ -90,7 +90,7 @@ router.post('/', jsonParser, (req, res) => {
             return User.hashPassword(password)
         })
         .then(data => {
-            return User.create({ username, password: data, looking_for });
+            return User.create({ username, password: data, looking_for, email });
         })
         .then(user => {
             return res.status(201).json(user.apiRepr());
