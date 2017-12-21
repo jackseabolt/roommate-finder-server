@@ -25,7 +25,7 @@ before(function(){
 
 beforeEach(function () { 
   return User.create({
-    username: 'giri', password: 'mypassword', looking_for: 'roommate-finder'
+    username: 'giri2', password: 'mypassword', looking_for: 'roommate-finder'
   });
 });
 
