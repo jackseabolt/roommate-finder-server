@@ -25,6 +25,5 @@
     "passport-http": "^0.3.0",
     "passport-jwt": "^3.0.1",
     "passport-local": "^1.0.0",
-    "socket.io": "^2.0.4"
   }
 }
