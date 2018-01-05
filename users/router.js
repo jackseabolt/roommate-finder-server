@@ -5,9 +5,9 @@ const bodyParser = require('body-parser');
 const { User } = require('./models');
 const router = express.Router();
 const jsonParser = bodyParser.json();
-const cloudinary = require('cloudinary')
-
-
+const cloudinary = require('cloudinary');
+const passport = require('passport');
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // ROUTE TO CREATE USERS INITIALLY
 router.post('/', jsonParser, (req, res) => {
@@ -296,24 +296,9 @@ router.put('/filter', jsonParser, (req, res) => {
     }
 });
 
-//route to create chat
-router.put('/chat', jsonParser, (req, res) => {
-    const newConversation1 = { conversation: req.body.currentChat, other_user: req.body.user2 };
-    const newConversation2 = { conversation: req.body.currentChat, other_user: req.body.user1 };
-    User
-        .update( { username: req.body.user1},
-        { $push: { conversations: newConversation1}} 
-        ) 
-        .then(() => {
-            return User
-            .update( { username: req.body.user2},
-            { $push: { conversations: newConversation2}} )  
-        })
-        .then(() => res.sendStatus(201))
-});
 
 // ROUTE TO CREATE AND UPDATE USER PROFILE
-router.put('/', jsonParser, (req, res) => {
+router.put('/', jsonParser, jwtAuth, (req, res) => {
     console.log("HERE IS THE REQ", req.body)
     const requiredFields = ['username'];
     const missingField = requiredFields.find(field => !(field in req.body));
@@ -327,7 +312,7 @@ router.put('/', jsonParser, (req, res) => {
         });
     }
     console.log('it is not rejected', req.body.picture);
-    User.findOne({ username: req.body.username })
+    User.findOne({ username: req.user.username })
         .then(user => {
             if (!user) {
 

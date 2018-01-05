@@ -5,7 +5,6 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const bodyParser = require('body-parser');
-
 const router = express.Router();
 
 const createAuthToken = user => {
