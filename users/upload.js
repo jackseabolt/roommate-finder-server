@@ -23,7 +23,6 @@ module.exports = (app) => {
 
     // The file upload has completed
     busboy.on('finish', function() {
-      console.log('Upload finished');
       
       // Your files are stored in req.files. In this case,
       // you only have one and it's req.files.element2:
@@ -41,7 +40,6 @@ module.exports = (app) => {
       
       // Grabs your file object from the request.
       const file = req.files.element2;
-      console.log(file);
       
       let s3bucket = new AWS.S3({
         accessKeyId: IAM_USER_KEY,
@@ -56,10 +54,8 @@ module.exports = (app) => {
           };
           s3bucket.upload(params, function (err, data) {
             if (err) {
-              console.log('error in callback');
               console.log(err);
             }
-            console.log('success');
             console.log(data);
           });
       });

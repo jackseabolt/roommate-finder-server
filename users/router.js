@@ -163,8 +163,7 @@ router.put('/filter', jsonParser, (req, res) => {
                         genderScore = (100 - (req.body.gender_bothered * 20));
                     }
                     newCollection[i].score = (petScore + quietScore + cigaretteScore + alcoholScore + marijuanaScore + scheduleScore + guestScore + cleanScore + aloneScore + genderScore) / 10;
-                    console.log(newCollection[i].score);
-                    console.log(newCollection[i]);
+
 
                 }
                 newCollection.sort(function (a, b) {
@@ -224,8 +223,6 @@ router.put('/filter', jsonParser, (req, res) => {
                         genderScore = (100 - (req.body.gender_bothered * 20));
                     }
                     newCollection[i].score = (petScore + quietScore + cigaretteScore + alcoholScore + marijuanaScore + scheduleScore + guestScore + cleanScore + aloneScore + genderScore) / 10;
-                    console.log(newCollection[i].score);
-                    console.log(newCollection[i]);
 
                 }
                 newCollection.sort(function (a, b) {
@@ -284,8 +281,6 @@ router.put('/filter', jsonParser, (req, res) => {
                         genderScore = (100 - (req.body.gender_bothered * 20));
                     }
                     newCollection[i].score = (petScore + quietScore + cigaretteScore + alcoholScore + marijuanaScore + scheduleScore + guestScore + cleanScore + aloneScore + genderScore) / 10;
-                    console.log(newCollection[i].score);
-                    console.log(newCollection[i]);
 
                 }
                 newCollection.sort(function (a, b) {
@@ -299,7 +294,6 @@ router.put('/filter', jsonParser, (req, res) => {
 
 // ROUTE TO CREATE AND UPDATE USER PROFILE
 router.put('/', jsonParser, jwtAuth, (req, res) => {
-    console.log("HERE IS THE REQ", req.body)
     const requiredFields = ['username'];
     const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -311,14 +305,12 @@ router.put('/', jsonParser, jwtAuth, (req, res) => {
             location: missingField
         });
     }
-    console.log('it is not rejected', req.body.picture);
     User.findOne({ username: req.user.username })
         .then(user => {
             if (!user) {
 
                 return res.sendStatus(422)
             }
-            console.log("IT GOT HERE")
             let updateStatus = user.firstName ? 'updated' : 'created';
 
 
